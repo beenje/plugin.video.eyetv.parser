@@ -75,7 +75,7 @@ class Plist:
 
 class Eyetv:
     """Class to retrieve EyeTV recordings"""
-    
+
     def __init__(self):
         """Initialize the list of EyeTV recordings"""
         # Get settings
@@ -106,9 +106,9 @@ class Eyetv:
         # Remove '.eyetvr' suffix
         filename = os.path.basename(relativePath)[:-7]
         return os.path.join(self.archivePath, dirname, filename)
-        
+
     def recordingsInfo(self):
-        """Generator that returns all recordings as a tuple (url, icon, thumbnail, infoLabels)""" 
+        """Generator that returns all recordings as a tuple (url, icon, thumbnail, infoLabels)"""
         for recording in self.recordings:
             filename = self._recordingPath(recording)
             url = filename + u'.mpg'
@@ -126,7 +126,7 @@ def main():
     """Entry point"""
 
     print '%s version %s' % (__plugin__, __version__)
-    
+
     # Open settings if EyeTV Archive path is not set
     if not __addon__.getSetting('archivePath'):
         __addon__.openSettings()
