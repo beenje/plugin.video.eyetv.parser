@@ -16,19 +16,28 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
-from xbmcswift import Plugin, xbmc, xbmcgui
+from xbmcswift import xbmcgui
 from resources.lib.eyetv_parser import Eyetv
-
-__url__ = "http://github.com/beenje/plugin.video.eyetv.parser"
-__plugin_name__ = 'EyeTV Parser'
-__plugin_id__ = 'plugin.video.eyetv.parser'
-plugin = Plugin(__plugin_name__, __plugin_id__)
+from resources.lib.eyetv_live import EyetvLive
+from config import plugin
 
 
+def create_eyetv_live():
+    """Return an Eyetvlive instance initialized with proper settings
 
-# Default View
+    An instance is only returned if EyeTV is running and iPhone
+    access is enabled"""
+    server = plugin.get_setting('server')
+    passwdEnabled = plugin.get_setting('passwdEnabled')
+    if passwdEnabled == 'true':
+        password = plugin.get_setting('password')
+    else:
+        password = ''
+    return EyetvLive(server, password)
+
 @plugin.route('/', default=True)
 def show_homepage():
+    """Default view showing available categories"""
     items = [
         # Live TV
         {'label': plugin.get_string(30020), 'url': plugin.url_for('live_tv')},
@@ -39,7 +48,23 @@ def show_homepage():
 
 @plugin.route('/live/')
 def live_tv():
-    pass
+    """Display the channels available for live TV"""
+    live = create_eyetv_live()
+    channels = live.get_channels()
+    items = [{
+        'label': ' '.join((channel['displayNumber'], channel['name'])),
+        'url': plugin.url_for('watch_channel', serviceid=channel['serviceID']),
+        'is_folder': False,
+        'is_playable': True
+    } for channel in channels]
+    return plugin.add_items(items)
+
+@plugin.route('/watch/<serviceid>/')
+def watch_channel(serviceid):
+    """Resolve and play the chosen channel"""
+    live = create_eyetv_live()
+    url = live.get_channel_url(serviceid)
+    return plugin.set_resolved_url(url)
 
 @plugin.route('/recordings/')
 def show_recordings():

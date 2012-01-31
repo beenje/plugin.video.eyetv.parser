@@ -3,6 +3,9 @@
 
     <!--Settings-->
     <string id="30001">EyeTV Archive path</string>
+    <string id="30002">EyeTV Server</string>
+    <string id="30003">Use password protection</string>
+    <string id="30004">Password</string>
     <string id="30010">Sort by</string>
     <string id="30011">recorded date</string>
     <string id="30012">reverse recorded date</string>
@@ -15,5 +18,11 @@
     <!--Errors-->
     <string id="30100">Could not parse 'EyeTV Archive.xml'</string>
     <string id="30101">Check your EyeTV Archive path</string>
+    <string id="30110">EyeTV Error</string>
+    <string id="30111">EyeTV is not running</string>
+    <string id="30112">iPhone access is disabled</string>
+    <string id="30113">Device is busy</string>
+    <string id="30114">EyeTV Server is unreachable</string>
+    <string id="30115">Authorization Required</string>
 
 </strings>
