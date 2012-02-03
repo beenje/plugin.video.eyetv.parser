@@ -22,18 +22,22 @@ from resources.lib.eyetv_live import EyetvLive
 from config import plugin
 
 
+BIT_RATE = ('320', '800', '1200', '2540', '4540')
+
 def create_eyetv_live():
     """Return an Eyetvlive instance initialized with proper settings
 
     An instance is only returned if EyeTV is running and iPhone
     access is enabled"""
     server = plugin.get_setting('server')
+    bitrate = BIT_RATE[int(plugin.get_setting('bitrate'))]
+    xbmc.log('Server: %s - Bitrate: %s' % (server, bitrate), xbmc.LOGDEBUG)
     passwdEnabled = plugin.get_setting('passwdEnabled')
     if passwdEnabled == 'true':
         password = plugin.get_setting('password')
     else:
         password = ''
-    return EyetvLive(server, password)
+    return EyetvLive(server, bitrate, password)
 
 @plugin.route('/', default=True)
 def show_homepage():

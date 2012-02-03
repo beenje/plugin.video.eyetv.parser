@@ -10,6 +10,12 @@
     <string id="30011">recorded date</string>
     <string id="30012">reverse recorded date</string>
     <string id="30013">title</string>
+    <string id="30014">Bit rate (kbit/s)</string>
+    <string id="30015">320</string>
+    <string id="30016">800</string>
+    <string id="30017">1200</string>
+    <string id="30018">2540</string>
+    <string id="30019">4540</string>
 
     <!--Category-->
     <string id="30020">Live TV</string>

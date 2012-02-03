@@ -34,9 +34,10 @@ EYETVPORT = 2170
 class EyetvLive:
     """Class to watch live TV using EyeTV iPhone access"""
 
-    def __init__(self, server, password):
+    def __init__(self, server, bitrate, password):
         """Initialization"""
         self.base_url = 'http://%s:%d' % (server, EYETVPORT)
+        self.bitrate = bitrate
         self.username = 'eyetv'
         self.password = password
         if not self.is_up():
@@ -111,9 +112,12 @@ class EyetvLive:
 
     def get_channel_url(self, serviceid):
         """Return the m3u8 url of the channel to stream"""
-        # "live/tuneto/1/"+this.connectionSpeed according to main.js
+        # "live/tuneto/1/"+this.connectionSpeed according to main.js (safari)
         # connectionSpeed is set to 320 when using safari
-        data = self.get_data('live/tuneto/1/320/' + serviceid)
+        # "live/tuneto/6/800/0/1/6/" with eyeTV app on iPhone
+        # "live/tuneto/6/1200/0/1/6/" with eyeTV app on iPad
+        # We pass the bitrate set in the preferences
+        data = self.get_data('/'.join(('live/tuneto/1', self.bitrate, serviceid)))
         if not data['success']:
             xbmc.log('live/tuneto error code: %d' % data['errorcode'], xbmc.LOGERROR)
             xbmcgui.Dialog().ok(plugin.get_string(30110), plugin.get_string(30113))
