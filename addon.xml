@@ -17,5 +17,6 @@
     <description lang="en">EyeTV parser is a video addon that let you watch live TV and browse all the recordings from your EyeTV Library. Recordings are listed with their description and icon (if any).</description>
     <disclaimer lang="en">EyeTV is a registered trademark of Elgato Systems GmbH</disclaimer>
     <platform>all</platform>
+    <language></language>
   </extension>
 </addon>
