@@ -41,14 +41,23 @@ def create_eyetv_live():
 
 @plugin.route('/', default=True)
 def show_homepage():
-    """Default view showing available categories"""
-    items = [
-        # Live TV
-        {'label': plugin.get_string(30020), 'url': plugin.url_for('live_tv')},
-        # Recordings
-        {'label': plugin.get_string(30021), 'url': plugin.url_for('show_recordings')},
-    ]
-    return plugin.add_items(items)
+    """Default view showing enabled categories"""
+    livetv = plugin.get_setting('livetv')
+    recordings = plugin.get_setting('recordings')
+    if livetv == 'true' and recordings != 'true':
+        return live_tv()
+    elif livetv != 'true' and recordings == 'true':
+        return show_recordings()
+    else:
+        # Show both categories if they are both enabled
+        # (or both disabled)
+        items = [
+            # Live TV
+            {'label': plugin.get_string(30020), 'url': plugin.url_for('live_tv')},
+            # Recordings
+            {'label': plugin.get_string(30021), 'url': plugin.url_for('show_recordings')},
+        ]
+        return plugin.add_items(items)
 
 @plugin.route('/live/')
 def live_tv():
