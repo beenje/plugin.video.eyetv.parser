@@ -16,13 +16,14 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
-from xbmcswift import xbmcgui
+from xbmcswift import xbmcgui, xbmc
 from resources.lib.eyetv_parser import Eyetv
 from resources.lib.eyetv_live import EyetvLive
 from config import plugin
 
 
 BIT_RATE = ('320', '800', '1200', '2540', '4540')
+
 
 def create_eyetv_live():
     """Return an Eyetvlive instance initialized with proper settings
@@ -38,6 +39,7 @@ def create_eyetv_live():
     else:
         password = ''
     return EyetvLive(server, bitrate, password)
+
 
 @plugin.route('/', default=True)
 def show_homepage():
@@ -59,6 +61,7 @@ def show_homepage():
         ]
         return plugin.add_items(items)
 
+
 @plugin.route('/live/')
 def live_tv():
     """Display the channels available for live TV"""
@@ -72,12 +75,14 @@ def live_tv():
     } for channel in channels]
     return plugin.add_items(items)
 
+
 @plugin.route('/watch/<serviceid>/')
 def watch_channel(serviceid):
     """Resolve and play the chosen channel"""
     live = create_eyetv_live()
     url = live.get_channel_url(serviceid)
     return plugin.set_resolved_url(url)
+
 
 @plugin.route('/recordings/')
 def show_recordings():
