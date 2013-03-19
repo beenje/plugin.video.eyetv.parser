@@ -58,7 +58,7 @@ def show_homepage():
             {'label': plugin.get_string(30020), 'url': plugin.url_for('live_tv')},
             # Recordings
             {'label': plugin.get_string(30021), 'url': plugin.url_for('show_recordings')},
-            {'label': 'Playlists', 'url': plugin.url_for('show_playlists')},
+            {'label': plugin.get_string(30022), 'url': plugin.url_for('show_playlists')},
         ]
         return plugin.add_items(items)
 
