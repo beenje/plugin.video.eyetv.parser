@@ -48,7 +48,7 @@ def show_homepage():
     recordings = plugin.get_setting('recordings')
     if livetv == 'true' and recordings != 'true':
         return live_tv()
-    elif livetv == 'true' and recordings == 'true':
+    elif livetv != 'true' and recordings == 'true':
         return show_recordings()
     else:
         # Show both categories if they are both enabled
@@ -56,7 +56,7 @@ def show_homepage():
         items = [
             # Live TV
             {'label': plugin.get_string(30020), 'url': plugin.url_for('live_tv')},
-            # Recordings
+            # Recordings & Playlists
             {'label': plugin.get_string(30021), 'url': plugin.url_for('show_recordings')},
             {'label': plugin.get_string(30022), 'url': plugin.url_for('show_playlists')},
         ]
@@ -128,7 +128,6 @@ def show_playlists():
         return plugin.add_items(items)
 
 
-
 @plugin.route('/showplaylist/<playlistid>/')
 def display_playlist(playlistid):
     """Shows all recordings from playlist """
@@ -147,9 +146,6 @@ def display_playlist(playlistid):
             'is_playable': True,
         } for (url, icon, thumbnail, info)  in eyetv.RecordingsInPlaylist(playlistid)]
         return plugin.add_items(items)
-
-
-
 
 
 if __name__ == '__main__':

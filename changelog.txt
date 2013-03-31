@@ -1,5 +1,5 @@
 [B]Version 2.2.2[/B]
-- added playlist functionality
+- added playlist functionality (thanks to Gareth!)
 
 [B]Version 2.2.1[/B]
 

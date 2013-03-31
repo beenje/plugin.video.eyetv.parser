@@ -128,43 +128,29 @@ class Eyetv:
             thumbnail = filename + u'.thumbnail.tiff'
             infoLabels = {'title': recording['Display Title'], 'plot': recording['Description']}
             yield (url, icon, thumbnail, infoLabels)
- 
 
     def playlistsInfo(self):
         """Generator that returns all recordings as a tuple (name, count, plid)"""
         for playlist in self.playlists:
             name = playlist["Name"]
-	    plid= str(playlist["Playlist ID"])
+            plid = str(playlist["Playlist ID"])
             icount = len(playlist["Playlist Items"])
-            yield (name, icount,plid)
+            yield (name, icount, plid)
 
-    def playlistsInfoLen(self):
-        """Generator that returns all recordings as a tuple (url, icon, thumbnail, infoLabels)"""
-        try:
-           if self.playlists is None:
-               filename = 0
-           else:
-               filename = len(self.playlists)
-        except: filename=-1
-        return filename
-
-    def RecordingsInPlaylist(self,playid):
+    def RecordingsInPlaylist(self, playid):
         """Generator that returns all recordings as a tuple (url, icon, thumbnail, infoLabels)"""
         for playlist in self.playlists:
-	    plid = playlist["Playlist ID"]
-	    if str(plid) == playid:
-               for ( precording) in playlist["Playlist Items"]: 
-                  precordingID = precording["Recording ID"]					
-                  recording  = self.recordingdict[str(precordingID)]
-                  filename = self._recordingPath(recording)
-                  url = filename + u'.mpg'
-                  icon = filename + u'.tiff'
-                  thumbnail = filename + u'.thumbnail.tiff'
-                  infoLabels = {'title': recording['Display Title'], 'plot': recording['Description']}
-                  yield (url, icon, thumbnail, infoLabels)
-
-
-
+            plid = playlist["Playlist ID"]
+            if str(plid) == playid:
+                for precording in playlist["Playlist Items"]:
+                    precordingID = precording["Recording ID"]
+                    recording = self.recordingdict[str(precordingID)]
+                    filename = self._recordingPath(recording)
+                    url = filename + u'.mpg'
+                    icon = filename + u'.tiff'
+                    thumbnail = filename + u'.thumbnail.tiff'
+                    infoLabels = {'title': recording['Display Title'], 'plot': recording['Description']}
+                    yield (url, icon, thumbnail, infoLabels)
 
     def nbRecordings(self):
         """Return the number of recordings available"""
